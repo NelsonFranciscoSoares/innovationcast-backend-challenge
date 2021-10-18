@@ -3,15 +3,17 @@ using System;
 using Backend.Challenge.Infrastructure.Persistence.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Backend.Challenge.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(DiscussaoDBContext))]
-    partial class DiscussaoDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211018200345_mapped-enum-field")]
+    partial class mappedenumfield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

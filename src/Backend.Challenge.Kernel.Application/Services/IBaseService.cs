@@ -11,11 +11,9 @@ namespace Backend.Challenge.Kernel.Application.Services
         where TEntity : BaseEntity, IAggregateRoot
     {
         Task<TDto> AdicionarAsync(TDto inputDTO);
-
         Task<TDto> ActualizarAsync(TDto inputDTO);
-
         Task<PagedResult<TDto>> ObterTodosPaginadoAsync(int pageSize, int pageIndex);
-
         Task<TDto> ObterPorIdAsync(Guid id);
+        Task RemoverAsync(Guid id);
     }
 }

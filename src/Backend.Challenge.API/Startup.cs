@@ -19,10 +19,12 @@ namespace Backend.Challenge
         {
             services.AddApiConfiguration(this.Configuration);
             services.RegisterServices();
+            services.AddSwaggerConfiguration();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwaggerConfiguration();
             app.UseApiConfiguration(env);
         }
     }

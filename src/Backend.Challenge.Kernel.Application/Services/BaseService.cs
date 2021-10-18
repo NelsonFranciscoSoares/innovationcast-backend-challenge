@@ -43,6 +43,8 @@ namespace Backend.Challenge.Kernel.Application
 
             var entidadeDominioPersistida = await this._genericRepository.AdicionarAsync(entidadeDominio);
 
+            await this._genericRepository.UnitOfWork.Commit();
+
             var outputDTO = this._mapper.Map<TDto>(entidadeDominioPersistida);
 
             return outputDTO;
@@ -52,7 +54,9 @@ namespace Backend.Challenge.Kernel.Application
         {
             var entidadeDominio = this._mapper.Map<TEntity>(inputDTO);
 
-            var entidadeDominioPersistida = await this._genericRepository.AtualizarAsync(entidadeDominio);
+            var entidadeDominioPersistida = await this._genericRepository.ActualizarAsync(entidadeDominio);
+
+            await this._genericRepository.UnitOfWork.Commit();
 
             var outputDTO = this._mapper.Map<TDto>(entidadeDominioPersistida);
 
@@ -62,6 +66,7 @@ namespace Backend.Challenge.Kernel.Application
         public async Task RemoverAsync(Guid id)
         {
             await this._genericRepository.RemoverAsync(id);
+            await this._genericRepository.UnitOfWork.Commit();
         }
 
         public async Task<TDto> ObterPorIdAsync(Guid id)

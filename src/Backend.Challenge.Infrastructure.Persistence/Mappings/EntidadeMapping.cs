@@ -20,6 +20,9 @@ namespace Backend.Challenge.Infrastructure.Persistence.Mappings
                     .WithOne(p => p.Entidade)
                     .HasForeignKey(p => p.EntidadeId);
 
+            builder.Property(f => f.TipoComentario)
+                    .HasConversion<string>();
+
             builder.ToTable("Entidades");
         }
     }

@@ -3,6 +3,9 @@ using Backend.Challenge.Domain.Interfaces.Repositories;
 using Backend.Challenge.Infrastructure.Persistence.DataContext;
 using Backend.Challenge.Kernel.Domain.Miscellaneous;
 using Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories;
+using System;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Backend.Challenge.Infrastructure.Persistence.Repositories
 {
@@ -16,6 +19,6 @@ namespace Backend.Challenge.Infrastructure.Persistence.Repositories
             this._discussaoDbContext = dbContext;
         }
 
-        public override IUnitOfWork UnitOfWork => this._discussaoDbContext ;
+        public override IUnitOfWork UnitOfWork => this._discussaoDbContext;
     }
 }

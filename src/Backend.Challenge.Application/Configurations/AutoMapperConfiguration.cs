@@ -8,6 +8,7 @@ namespace Backend.Challenge.API.Configurations
     {
         public AutoMapperProfileConfiguration() {
             this.CreateMap<ComentarioDTO, ComentarioEntity>().ReverseMap();
+            this.CreateMap<EntidadeDTO, EntidadeEntity>().ReverseMap();
         }
     }
 }

@@ -7,17 +7,27 @@ namespace Backend.Challenge.Domain.Entities
 {
     public class EntidadeEntity : BaseEntity, IAggregateRoot
     {
-        public TipoEntidadeEnum TipoComentario { get; }
-        public IEnumerable<ComentarioEntity> Comentarios { get; }
-        public Guid UtilizadorId { get; }
-        public UtilizadorEntity Utilizador { get; }
+        public TipoEntidadeEnum TipoComentario { get; private set; }
+        public List<ComentarioEntity> Comentarios { get; private set; }
+        public Guid UtilizadorId { get; private set; }
+        public UtilizadorEntity Utilizador { get; private set; }
 
         internal EntidadeEntity(TipoEntidadeEnum tipoComentario, Guid utilizadorId)
         {
-            this.TipoComentario = TipoComentario;
+            this.TipoComentario = tipoComentario;
             this.UtilizadorId = utilizadorId;
         }
 
         public EntidadeEntity() { }
+
+        public void AdicionarComentario(ComentarioEntity comentarioEntity)
+        {
+            if (this.Comentarios == null) this.Comentarios = new List<ComentarioEntity>();
+
+            comentarioEntity.AdicionaDataPublicacao();
+
+            this.Comentarios.Add(comentarioEntity);
+
+        }
     }
 }

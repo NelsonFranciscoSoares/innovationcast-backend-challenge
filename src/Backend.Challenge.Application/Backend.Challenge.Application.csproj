@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj" />
+    <ProjectReference Include="..\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj" />
     <ProjectReference Include="..\Backend.Challenge.Domain\Backend.Challenge.Domain.csproj" />
   </ItemGroup>
 

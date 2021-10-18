@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Application", "2 - Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.Challenge.Application", "src\Backend.Challenge.Application\Backend.Challenge.Application.csproj", "{61B8E1B8-7255-44C6-A32D-06AD88806D0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Challenge.Kernel.Application", "Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj", "{3133FD95-F162-4CDC-ACCA-F4C93A220429}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Challenge.Kernel.Application", "src\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj", "{3133FD95-F162-4CDC-ACCA-F4C93A220429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

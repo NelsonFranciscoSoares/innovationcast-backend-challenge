@@ -16,7 +16,7 @@ namespace Backend.Challenge.API.Configurations
 
             services.AddScoped<IEntidadeService, EntidadeService>();
 
-            services.AddAutoMapper(typeof(AutoMapperProfileConfiguration));
+            services.AddAutoMapper(mapperConfiguration => mapperConfiguration.AddProfile<AutoMapperProfileConfiguration>());
         }
     }
 }
