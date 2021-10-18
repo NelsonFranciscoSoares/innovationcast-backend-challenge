@@ -1,11 +1,9 @@
-﻿using Backend.Challenge.Domain.Interfaces.Repositories;
+﻿using Backend.Challenge.Application.Interfaces;
+using Backend.Challenge.Application.Services;
+using Backend.Challenge.Domain.Interfaces.Repositories;
 using Backend.Challenge.Infrastructure.Persistence.DataContext;
 using Backend.Challenge.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Backend.Challenge.API.Configurations
 {
@@ -15,6 +13,10 @@ namespace Backend.Challenge.API.Configurations
         {
             services.AddScoped<DiscussaoDBContext>();
             services.AddScoped<IEntidadeRepository, EntidadeRepository>();
+
+            services.AddScoped<IEntidadeService, EntidadeService>();
+
+            services.AddAutoMapper(typeof(AutoMapperProfileConfiguration));
         }
     }
 }

@@ -15,26 +15,27 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
         where TEntity : BaseEntity, IAggregateRoot, new()
     {
         protected readonly DbSet<TEntity> DbSet;
-        private readonly DbContext DbContext;
+
+        public abstract IUnitOfWork UnitOfWork { get; }
 
         protected BaseRepository(DbContext dbContext)
         {
-            this.DbContext = dbContext;
             this.DbSet = dbContext.Set<TEntity>();
         }
 
-        public async Task Adicionar(TEntity entity)
+        public async Task<TEntity> AdicionarAsync(TEntity entity)
         {
             await this.DbSet.AddAsync(entity);
+            return entity;
         }
 
-        public Task Atualizar(TEntity entity)
+        public Task<TEntity> AtualizarAsync(TEntity entity)
         {
             this.DbSet.Update(entity);
-            return Task.CompletedTask;
+            return Task.FromResult(entity);
         }
 
-        public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> BuscarAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await this.DbSet
                         .AsNoTracking()
@@ -42,17 +43,19 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
                         .ToListAsync();
         }
 
-        public async Task<TEntity> ObterPorId(Guid id)
+        public async Task<TEntity> ObterPorIdAsync(Guid id)
         {
             return await this.DbSet
                             .FindAsync(id);
         }
 
-        public async Task<PagedResult<TEntity>> ObterTodos(int pageSize, int pageIndex)
+        public async Task<PagedResult<TEntity>> ObterTodosPaginadoAsync(int pageSize, int pageIndex)
         {
             var offset = this.CalculaOffset(pageSize, pageIndex);
 
-            var entities = await this.DbSet.Skip(offset)
+            var entities = await this.DbSet
+                                .AsNoTracking()
+                                .Skip(offset)
                                 .Take(pageSize)
                                 .ToListAsync();
 
@@ -61,11 +64,11 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
                 List = entities,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                TotalResults = await ObtemNumeroTotalRegistos()
+                TotalResults = await ObtemNumeroTotalRegistosAsync()
             };
         }
 
-        protected async Task<int> ObtemNumeroTotalRegistos()
+        protected async Task<int> ObtemNumeroTotalRegistosAsync()
         {
             return await this.DbSet.CountAsync();
         }
@@ -75,7 +78,7 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
             return (pageIndex - 1) * pageSize;
         }
 
-        public Task Remover(Guid id)
+        public Task RemoverAsync(Guid id)
         {
             this.DbSet.Remove(new TEntity { Id = id });
             return Task.CompletedTask;

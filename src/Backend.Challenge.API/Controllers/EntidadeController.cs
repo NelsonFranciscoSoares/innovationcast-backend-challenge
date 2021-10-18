@@ -15,7 +15,7 @@ namespace Backend.Challenge.API.Controllers
         {
             //chama application service
 
-            return View();
+            return Task.CompletedTask;
         }
     }
 }

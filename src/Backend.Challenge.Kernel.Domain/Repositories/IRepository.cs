@@ -12,11 +12,12 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
     public interface IRepository<TEntity>
         where TEntity : BaseEntity, IAggregateRoot
     {
-        Task Adicionar(TEntity entity);
-        Task<TEntity> ObterPorId(Guid id);
-        Task<PagedResult<TEntity>> ObterTodos(int pageSize, int pageIndex);
-        Task Atualizar(TEntity entity);
-        Task Remover(Guid id);
-        Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> AdicionarAsync(TEntity entity);
+        Task<TEntity> ObterPorIdAsync(Guid id);
+        Task<PagedResult<TEntity>> ObterTodosPaginadoAsync(int pageSize, int pageIndex);
+        Task<TEntity> AtualizarAsync(TEntity entity);
+        Task RemoverAsync(Guid id);
+        Task<IEnumerable<TEntity>> BuscarAsync(Expression<Func<TEntity, bool>> predicate);
+        IUnitOfWork UnitOfWork { get; }
     }
 }
