@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Backend.Challenge.Kernel.Domain\Backend.Challenge.Kernel.Domain.csproj" />
   </ItemGroup>
 

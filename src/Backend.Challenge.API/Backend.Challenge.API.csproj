@@ -6,6 +6,7 @@
   </PropertyGroup>
 
 <ItemGroup>
+	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
 	  <PrivateAssets>all</PrivateAssets>
 	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -15,6 +16,7 @@
 </ItemGroup>
 
 <ItemGroup>
+  <ProjectReference Include="..\Backend.Challenge.Application\Backend.Challenge.Application.csproj" />
   <ProjectReference Include="..\Backend.Challenge.Infrastructure.Persistence\Backend.Challenge.Infrastructure.Persistence.csproj" />
 </ItemGroup>
 
