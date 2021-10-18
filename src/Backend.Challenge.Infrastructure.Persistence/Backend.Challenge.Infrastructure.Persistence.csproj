@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Backend.Challenge.Domain\Backend.Challenge.Domain.csproj" />
+    <ProjectReference Include="..\Backend.Challenge.Kernel.Domain\Backend.Challenge.Kernel.Domain.csproj" />
+    <ProjectReference Include="..\Backend.Challenge.Kernel.Infrastructure.Persistence\Backend.Challenge.Kernel.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
