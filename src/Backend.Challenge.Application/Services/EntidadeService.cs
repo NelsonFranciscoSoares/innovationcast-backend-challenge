@@ -4,6 +4,7 @@ using Backend.Challenge.Application.Interfaces;
 using Backend.Challenge.Domain.Entities;
 using Backend.Challenge.Domain.Interfaces.Repositories;
 using Backend.Challenge.Kernel.Application;
+using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using System;
 using System.Threading.Tasks;
 
@@ -28,6 +29,13 @@ namespace Backend.Challenge.Application.Services
             await this._genericRepository.UnitOfWork.Commit();
 
             return this._mapper.Map<EntidadeDTO>(entidadeEntityPersistida);
+        }
+
+        public async Task<PagedResultDTO<ComentarioDTO>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex)
+        {
+            var resultadoPaginado = await ((IEntidadeRepository)this._genericRepository).ObterComentariosPorEntidadePaginadoAsync(id, pageSize, pageIndex);
+
+            return this._mapper.Map<PagedResultDTO<ComentarioDTO>>(resultadoPaginado);
         }
     }
 }

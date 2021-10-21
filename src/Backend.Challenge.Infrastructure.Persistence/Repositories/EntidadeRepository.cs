@@ -6,6 +6,8 @@ using Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using Backend.Challenge.Kernel.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Challenge.Infrastructure.Persistence.Repositories
 {
@@ -20,5 +22,26 @@ namespace Backend.Challenge.Infrastructure.Persistence.Repositories
         }
 
         public override IUnitOfWork UnitOfWork => this._discussaoDbContext;
+
+        public async Task<PagedResult<ComentarioEntity>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex)
+        {
+            var offset = this.CalculaOffset(pageSize, pageIndex);
+
+            var comentarios = await this._discussaoDbContext.Comentarios
+                                        .Where(param => param.EntidadeId == id)
+                                        .AsNoTracking()
+                                        .Skip(offset)
+                                        .Take(pageSize)
+                                        .OrderByDescending(param => param.DataPublicacao)
+                                        .ToListAsync();
+
+            return new PagedResult<ComentarioEntity>
+            {
+                Items = comentarios,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalResults = await this._discussaoDbContext.Comentarios.CountAsync()
+            };
+        }
     }
 }

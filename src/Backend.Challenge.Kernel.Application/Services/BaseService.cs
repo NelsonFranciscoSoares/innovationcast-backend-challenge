@@ -30,7 +30,7 @@ namespace Backend.Challenge.Kernel.Application
             return new PagedResult<TDto>
             {
                 //TO DO: Melhorar aqui
-                List = this._mapper.Map<IEnumerable<TDto>>(entidades?.List),
+                Items = this._mapper.Map<IEnumerable<TDto>>(entidades?.Items),
                 PageIndex = entidades.PageIndex,
                 PageSize = entidades.PageSize,
                 TotalResults = entidades.TotalResults

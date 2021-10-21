@@ -61,7 +61,7 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
 
             return new PagedResult<TEntity>
             {
-                List = entities,
+                Items = entities,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 TotalResults = await ObtemNumeroTotalRegistosAsync()

@@ -1,5 +1,6 @@
 ﻿using Backend.Challenge.Application.DataTransferObjets;
 using Backend.Challenge.Domain.Entities;
+using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using Backend.Challenge.Kernel.Application.Services;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace Backend.Challenge.Application.Interfaces
     public interface IEntidadeService : IBaseService<EntidadeDTO, EntidadeEntity>
     {
         Task<EntidadeDTO> AdicionarComentarioAsync(Guid entidadeId, ComentarioDTO comentarioDTO);
+
+        Task<PagedResultDTO<ComentarioDTO>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex);
     }
 }
