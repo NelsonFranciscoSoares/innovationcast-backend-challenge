@@ -70,31 +70,29 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UtilizadorId")
+                    b.Property<Guid?>("UtilizadorEntityId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UtilizadorId");
+                    b.HasIndex("UtilizadorEntityId");
 
                     b.ToTable("Entidades");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("259ba75a-9b6b-4105-a92a-d65f9d117e26"),
+                            Id = new Guid("d5e9db95-4cac-44d7-9faa-d132140dfb2a"),
                             DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            TipoComentario = "IDEIA",
-                            UtilizadorId = new Guid("fea51e65-a4eb-413b-853c-586a7e5cbb51")
+                            TipoComentario = "IDEIA"
                         },
                         new
                         {
-                            Id = new Guid("f1ba106a-d716-43c1-964e-eb96a91e966b"),
+                            Id = new Guid("57819973-7eb4-4d19-87a0-c30b684a6546"),
                             DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            TipoComentario = "IDEIA",
-                            UtilizadorId = new Guid("bb8704ab-e56e-4ca2-bbec-b5421aec8a4a")
+                            TipoComentario = "SINAIS"
                         });
                 });
 
@@ -121,24 +119,21 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Utilizadores");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("fea51e65-a4eb-413b-853c-586a7e5cbb51"),
-                            DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Email = "teste01@gmail.com",
-                            Username = "Teste01"
-                        },
-                        new
-                        {
-                            Id = new Guid("bb8704ab-e56e-4ca2-bbec-b5421aec8a4a"),
-                            DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            Email = "teste02@gmail.com",
-                            Username = "Teste02"
-                        });
+            modelBuilder.Entity("ComentarioEntityUtilizadorEntity", b =>
+                {
+                    b.Property<Guid>("ComentariosVisualizadosId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Visualizado_PorId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ComentariosVisualizadosId", "Visualizado_PorId");
+
+                    b.HasIndex("Visualizado_PorId");
+
+                    b.ToTable("ComentarioEntityUtilizadorEntity");
                 });
 
             modelBuilder.Entity("Backend.Challenge.Domain.Entities.ComentarioEntity", b =>
@@ -153,12 +148,22 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Backend.Challenge.Domain.Entities.EntidadeEntity", b =>
                 {
-                    b.HasOne("Backend.Challenge.Domain.Entities.UtilizadorEntity", "Utilizador")
+                    b.HasOne("Backend.Challenge.Domain.Entities.UtilizadorEntity", null)
                         .WithMany("Entidades")
-                        .HasForeignKey("UtilizadorId")
+                        .HasForeignKey("UtilizadorEntityId");
+                });
+
+            modelBuilder.Entity("ComentarioEntityUtilizadorEntity", b =>
+                {
+                    b.HasOne("Backend.Challenge.Domain.Entities.ComentarioEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ComentariosVisualizadosId")
                         .IsRequired();
 
-                    b.Navigation("Utilizador");
+                    b.HasOne("Backend.Challenge.Domain.Entities.UtilizadorEntity", null)
+                        .WithMany()
+                        .HasForeignKey("Visualizado_PorId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Challenge.Domain.Entities.EntidadeEntity", b =>

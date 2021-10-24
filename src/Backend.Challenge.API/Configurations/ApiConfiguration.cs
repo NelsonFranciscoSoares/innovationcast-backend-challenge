@@ -1,6 +1,6 @@
-﻿using Backend.Challenge.API.ConfigurationsData;
-using Backend.Challenge.Domain.Entities;
+﻿using Backend.Challenge.Domain.Entities;
 using Backend.Challenge.Infrastructure.Persistence.DataContext;
+using Backend.Challenge.Kernel.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Backend.Challenge.API.Configurations
 {
@@ -21,7 +18,9 @@ namespace Backend.Challenge.API.Configurations
             services.AddDbContext<DiscussaoDBContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DiscussaoConnectionString")));
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddJsonOptions(options => 
+                        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull);
 
             services.AddCors(options =>
             {
@@ -33,8 +32,13 @@ namespace Backend.Challenge.API.Configurations
                             .AllowAnyHeader());
             });
 
-            var utilizadorId = configuration.GetSection("ConfigurationsData")["UtilizadorId"];
-            services.Configure<UtilizadorEntity>(p => new UtilizadorEntity(Guid.Parse(utilizadorId)));
+            GetConfigurationData(services, configuration);
+        }
+
+        private static void GetConfigurationData(IServiceCollection services, IConfiguration configuration)
+        {
+            var utilizadorId = configuration.GetConfigurationValueByName("UtilizadorId");
+            services.AddSingleton(new UtilizadorEntity(Guid.Parse(utilizadorId)));
         }
 
         public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

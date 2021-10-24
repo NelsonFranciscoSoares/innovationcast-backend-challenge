@@ -9,13 +9,10 @@ namespace Backend.Challenge.Domain.Entities
     {
         public TipoEntidadeEnum TipoComentario { get; private set; }
         public List<ComentarioEntity> Comentarios { get; private set; }
-        public Guid UtilizadorId { get; private set; }
-        public UtilizadorEntity Utilizador { get; private set; }
 
-        internal EntidadeEntity(TipoEntidadeEnum tipoComentario, Guid utilizadorId)
+        internal EntidadeEntity(TipoEntidadeEnum tipoComentario)
         {
             this.TipoComentario = tipoComentario;
-            this.UtilizadorId = utilizadorId;
         }
 
         public EntidadeEntity() { }
@@ -27,7 +24,6 @@ namespace Backend.Challenge.Domain.Entities
             comentarioEntity.AdicionaDataPublicacao();
 
             this.Comentarios.Add(comentarioEntity);
-
         }
     }
 }

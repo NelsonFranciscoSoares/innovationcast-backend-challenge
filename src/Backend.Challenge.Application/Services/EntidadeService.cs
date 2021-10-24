@@ -2,11 +2,11 @@
 using Backend.Challenge.Application.DataTransferObjets.Comentarios;
 using Backend.Challenge.Application.DataTransferObjets.Comentarios.Criar;
 using Backend.Challenge.Application.Interfaces;
+using Backend.Challenge.Application.Validators;
 using Backend.Challenge.Domain.Entities;
 using Backend.Challenge.Domain.Interfaces.Repositories;
 using Backend.Challenge.Kernel.Application;
 using Backend.Challenge.Kernel.Application.DataTransferObjects;
-using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
@@ -17,22 +17,23 @@ namespace Backend.Challenge.Application.Services
         private readonly IEntidadeRepository _entidadeRepository;
         private readonly UtilizadorEntity _utilizadorContexto;
 
-        public EntidadeService(IEntidadeRepository entidadeRepository, IMapper mapper, IOptions<UtilizadorEntity> utilizadorContexto)
-            :base(mapper)
+        public EntidadeService(
+            IEntidadeRepository entidadeRepository, 
+            IMapper mapper,
+            IValidationContext validationContext,
+            UtilizadorEntity utilizadorContexto)
+            :base(mapper, validationContext)
         {
             this._entidadeRepository = entidadeRepository;
-            this._utilizadorContexto = utilizadorContexto.Value;
+            this._utilizadorContexto = utilizadorContexto;
         }
 
         public async Task<CriarComentarioOutputDTO> AdicionarComentarioAsync(Guid entidadeId, CriarComentarioInputDTO comentarioInputDTO)
         {
-            //Validação aqui
-            if(comentarioInputDTO.EntidadeId != entidadeId)
-            {
-                // retorna mensagem de erro
-            }
-
             comentarioInputDTO.EntidadeId = entidadeId;
+
+            if (this.ExecutarValidacao(new CriarComentarioValidator(), comentarioInputDTO) == false) return null;
+
             var entidadeEntity = await this._entidadeRepository.ObterPorIdAsync(entidadeId);
 
             var comentarioEntity = this._mapper.Map<ComentarioEntity>(comentarioInputDTO);

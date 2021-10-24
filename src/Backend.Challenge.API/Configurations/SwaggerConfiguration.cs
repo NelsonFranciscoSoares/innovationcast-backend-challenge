@@ -16,13 +16,11 @@ namespace Backend.Challenge.API.Configurations
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "Innovationcast - Challenge",
-                    Description = "API Colaborativa - desafio de Innovationcast",
-                    Contact = new OpenApiContact() { Name = "Nelson Soares", Email = "nelsonfranciscosoares1987@gmail.com" },
+                    Title = "InnovationCast - Challenge",
+                    Description = "API Discussão - Desafio InnovationCast",
+                    Contact = new OpenApiContact() { Name = "Nelson Francisco Vicente Soares", Email = "nelsonfranciscosoares1987@gmail.com" },
                     License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
-
-
             });
         }
 

@@ -10,6 +10,7 @@ namespace Backend.Challenge.Domain.Entities
         public string Username { get; }
         public string Email { get; }
         public IEnumerable<EntidadeEntity> Entidades { get; }
+        public IEnumerable<ComentarioEntity> ComentariosVisualizados { get; }
 
         public UtilizadorEntity(string username, string email)
         {
@@ -21,6 +22,8 @@ namespace Backend.Challenge.Domain.Entities
         {
             this.Id = id;
         }
+
+        public UtilizadorEntity() { }
 
     }
 }

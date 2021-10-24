@@ -8,7 +8,6 @@ namespace Backend.Challenge.Kernel.Application.DataTransferObjects
 {
     public class SucessoDTO<T>
     {
-        public string Mensagem { get; set; }
         public T DadosRetorno { get; set; }
     }
 }

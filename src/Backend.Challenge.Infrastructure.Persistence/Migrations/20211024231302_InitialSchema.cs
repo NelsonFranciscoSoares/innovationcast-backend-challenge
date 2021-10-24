@@ -27,7 +27,8 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    UtilizadorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TipoComentario = table.Column<string>(type: "text", nullable: false),
+                    UtilizadorEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     DataInsercao = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     DataEdicao = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
@@ -35,8 +36,8 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Entidades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entidades_Utilizadores_UtilizadorId",
-                        column: x => x.UtilizadorId,
+                        name: "FK_Entidades_Utilizadores_UtilizadorEntityId",
+                        column: x => x.UtilizadorEntityId,
                         principalTable: "Utilizadores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -65,23 +66,43 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Utilizadores",
-                columns: new[] { "Id", "DataEdicao", "DataInsercao", "Email", "Username" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "ComentarioEntityUtilizadorEntity",
+                columns: table => new
                 {
-                    { new Guid("184a9890-e15d-43eb-989e-87db80eac0bd"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "teste01@gmail.com", "Teste01" },
-                    { new Guid("11a4a979-05b1-45ff-b875-5852abf5da75"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "teste02@gmail.com", "Teste02" }
+                    ComentariosVisualizadosId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Visualizado_PorId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComentarioEntityUtilizadorEntity", x => new { x.ComentariosVisualizadosId, x.Visualizado_PorId });
+                    table.ForeignKey(
+                        name: "FK_ComentarioEntityUtilizadorEntity_Comentarios_ComentariosVis~",
+                        column: x => x.ComentariosVisualizadosId,
+                        principalTable: "Comentarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ComentarioEntityUtilizadorEntity_Utilizadores_Visualizado_P~",
+                        column: x => x.Visualizado_PorId,
+                        principalTable: "Utilizadores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "Entidades",
-                columns: new[] { "Id", "DataEdicao", "DataInsercao", "UtilizadorId" },
+                columns: new[] { "Id", "DataEdicao", "DataInsercao", "TipoComentario", "UtilizadorEntityId" },
                 values: new object[,]
                 {
-                    { new Guid("2a2167a9-2714-4cb7-8556-212cd9ebba7b"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new Guid("184a9890-e15d-43eb-989e-87db80eac0bd") },
-                    { new Guid("8d2f019a-03e3-44da-a372-ffa1f8370623"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new Guid("11a4a979-05b1-45ff-b875-5852abf5da75") }
+                    { new Guid("d5e9db95-4cac-44d7-9faa-d132140dfb2a"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "IDEIA", null },
+                    { new Guid("57819973-7eb4-4d19-87a0-c30b684a6546"), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "SINAIS", null }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComentarioEntityUtilizadorEntity_Visualizado_PorId",
+                table: "ComentarioEntityUtilizadorEntity",
+                column: "Visualizado_PorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comentarios_EntidadeId",
@@ -89,13 +110,16 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                 column: "EntidadeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entidades_UtilizadorId",
+                name: "IX_Entidades_UtilizadorEntityId",
                 table: "Entidades",
-                column: "UtilizadorId");
+                column: "UtilizadorEntityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ComentarioEntityUtilizadorEntity");
+
             migrationBuilder.DropTable(
                 name: "Comentarios");
 

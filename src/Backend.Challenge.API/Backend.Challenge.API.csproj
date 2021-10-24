@@ -19,6 +19,7 @@
 <ItemGroup>
   <ProjectReference Include="..\Backend.Challenge.Application\Backend.Challenge.Application.csproj" />
   <ProjectReference Include="..\Backend.Challenge.Infrastructure.Persistence\Backend.Challenge.Infrastructure.Persistence.csproj" />
+  <ProjectReference Include="..\Backend.Challenge.Kernel.API\Backend.Challenge.Kernel.API.csproj" />
 </ItemGroup>
 
 </Project>

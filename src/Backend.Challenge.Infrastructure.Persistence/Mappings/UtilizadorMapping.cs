@@ -24,10 +24,6 @@ namespace Backend.Challenge.Infrastructure.Persistence.Mappings
                     .IsRequired()
                     .HasColumnType("varchar(200)");
 
-            builder.HasMany(f => f.Entidades)
-                    .WithOne(p => p.Utilizador)
-                    .HasForeignKey(p => p.UtilizadorId);
-
             builder.ToTable("Utilizadores");
         }
     }

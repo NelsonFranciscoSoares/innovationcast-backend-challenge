@@ -8,7 +8,7 @@ namespace Backend.Challenge.Kernel.Application.DataTransferObjects
 {
     public class ErroDTO
     {
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public string Mensagem { get; set; }
     }
 }
