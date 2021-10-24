@@ -1,4 +1,5 @@
 ﻿using Backend.Challenge.Application.DataTransferObjets;
+using Backend.Challenge.Application.DataTransferObjets.Comentarios;
 using Backend.Challenge.Application.Interfaces;
 using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +19,46 @@ namespace Backend.Challenge.API.Controllers
         }
 
         [HttpPost("{entidadeId:guid}/adicionar-novo-comentario")]
-        public async Task<EntidadeDTO> AdicionaComentario(Guid entidadeId, ComentarioDTO comentarioDTO)
+        public async Task<ResponseCriarComentarioDTO> AdicionaComentario(Guid entidadeId, RequestCriarComentarioDTO requestCriarComentarioDTO)
         {
-            var entidadeDTO = await this._entidadeService.AdicionarComentarioAsync(entidadeId, comentarioDTO);
+            var criarComentarioOutputDTO = await this._entidadeService.AdicionarComentarioAsync(entidadeId, requestCriarComentarioDTO.DadosEntrada);
 
-            return entidadeDTO;
+            return new ResponseCriarComentarioDTO { 
+                Sucesso = new SucessoDTO<CriarComentarioOutputDTO> {
+                    Mensagem = "Comentário adicionado com sucesso",
+                    DadosRetorno = criarComentarioOutputDTO
+                }
+            };
         }
 
         [HttpGet("{entidadeId:guid}/listar-comentarios")]
-        public async Task<PagedResultDTO<ComentarioDTO>> ListarComentarios(Guid entidadeId, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
+        public async Task<ResponseListarComentariosDTO> ListarComentarios(Guid entidadeId, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
         {
-            var entidadeDTO = await this._entidadeService.ObterComentariosPorEntidadePaginadoAsync(entidadeId, pageSize, pageIndex);
+            var listaComentariosPorEntidade = await this._entidadeService.ObterComentariosPorEntidadePaginadoAsync(entidadeId, pageSize, pageIndex);
 
-            return entidadeDTO;
+            return new ResponseListarComentariosDTO
+            {
+                Sucesso = new SucessoDTO<PagedResultDTO<ListarComentariosOutputDTO>>
+                {
+                    DadosRetorno = listaComentariosPorEntidade,
+                    Mensagem = "Obtida lista de comentários por entidade"
+                }
+            };
+        }
+
+        [HttpGet("{entidadeId:guid}/listar-comentarios-novos")]
+        public async Task<ResponseListarComentariosNovosDTO> ListarComentariosNovos(Guid entidadeId, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
+        {
+            var listaComentariosNovosPorEntidade = await this._entidadeService.ObterComentariosNovosPorEntidadePaginadoAsync(entidadeId, pageSize, pageIndex);
+
+            return new ResponseListarComentariosNovosDTO
+            {
+                Sucesso = new SucessoDTO<PagedResultDTO<ListarComentariosNovosOutputDTO>>
+                {
+                    DadosRetorno = listaComentariosNovosPorEntidade,
+                    Mensagem = "Obtida lista de comentários por entidade"
+                }
+            };
         }
     }
 }

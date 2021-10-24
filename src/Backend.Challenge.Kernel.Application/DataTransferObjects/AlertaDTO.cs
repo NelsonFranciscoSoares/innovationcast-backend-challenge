@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Backend.Challenge.Kernel.Application.DataTransferObjects
 {
-    public abstract class BaseDTO
+    public class AlertaDTO
     {
-        public Guid Id { get; set; }
+        public string Mensagem { get; set; }
     }
 }

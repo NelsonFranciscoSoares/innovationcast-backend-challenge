@@ -1,4 +1,6 @@
-﻿using Backend.Challenge.Infrastructure.Persistence.DataContext;
+﻿using Backend.Challenge.API.ConfigurationsData;
+using Backend.Challenge.Domain.Entities;
+using Backend.Challenge.Infrastructure.Persistence.DataContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,9 @@ namespace Backend.Challenge.API.Configurations
                             .AllowAnyMethod()
                             .AllowAnyHeader());
             });
+
+            var utilizadorId = configuration.GetSection("ConfigurationsData")["UtilizadorId"];
+            services.Configure<UtilizadorEntity>(p => new UtilizadorEntity(Guid.Parse(utilizadorId)));
         }
 
         public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

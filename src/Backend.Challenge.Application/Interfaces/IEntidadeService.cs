@@ -1,19 +1,19 @@
 ﻿using Backend.Challenge.Application.DataTransferObjets;
-using Backend.Challenge.Domain.Entities;
+using Backend.Challenge.Application.DataTransferObjets.Comentarios;
+using Backend.Challenge.Application.DataTransferObjets.Comentarios.Criar;
 using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using Backend.Challenge.Kernel.Application.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Backend.Challenge.Application.Interfaces
 {
-    public interface IEntidadeService : IBaseService<EntidadeDTO, EntidadeEntity>
+    public interface IEntidadeService : IBaseService
     {
-        Task<EntidadeDTO> AdicionarComentarioAsync(Guid entidadeId, ComentarioDTO comentarioDTO);
+        Task<CriarComentarioOutputDTO> AdicionarComentarioAsync(Guid entidadeId, CriarComentarioInputDTO comentarioDTO);
 
-        Task<PagedResultDTO<ComentarioDTO>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex);
+        Task<PagedResultDTO<ListarComentariosOutputDTO>> ObterComentariosPorEntidadePaginadoAsync(Guid entidadeId, int pageSize, int pageIndex);
+
+        Task<PagedResultDTO<ListarComentariosNovosOutputDTO>> ObterComentariosNovosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex);
     }
 }

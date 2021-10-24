@@ -1,5 +1,6 @@
 ﻿using Backend.Challenge.Kernel.Domain.AggregateRoot;
 using Backend.Challenge.Kernel.Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Backend.Challenge.Domain.Entities
@@ -14,6 +15,11 @@ namespace Backend.Challenge.Domain.Entities
         {
             this.Username = username;
             this.Email = email;
+        }
+
+        public UtilizadorEntity(Guid id)
+        {
+            this.Id = id;
         }
 
     }

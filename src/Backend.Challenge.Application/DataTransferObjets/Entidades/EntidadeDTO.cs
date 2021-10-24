@@ -1,5 +1,6 @@
 ﻿using Backend.Challenge.Domain.Entities;
 using Backend.Challenge.Kernel.Application;
+using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 
