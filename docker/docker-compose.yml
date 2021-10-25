@@ -2,18 +2,19 @@ version: "3.9"
 
 services:
 
-    # api-catalogo:
-        # image: franciscosoares1987/innovationcast-api-comentario:latest
-        # container_name: innovationcast-api-comentario
-        # build: 
-            # context: ../src
-            # dockerfile: ./Backend.Challenge.API/Dockerfile
-        # restart: always 
-        # environment: 
-            # - ASPNETCORE_ENVIRONMENT=DEVELOPMENT
-            # - ASPNETCORE_URLS=https://+:5301;http://+5302
-        # depends_on:
-            # - db-postgres
+    api-comentario:
+        image: franciscosoares1987/innovationcast-api-comentario:latest
+        container_name: innovationcast-api-comentario
+        build: 
+            context: ../src
+            dockerfile: ./Backend.Challenge.API/Dockerfile
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=DEVELOPMENT
+        ports:
+            - "8080:80"
+        depends_on:
+            - db-postgres
             
     db-postgres:
         image: postgres

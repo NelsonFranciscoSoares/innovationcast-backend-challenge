@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Backend.Challenge.Kernel.Application
+namespace Backend.Challenge.Kernel.Application.DataTransferObjects
 {
     public abstract class BaseDTO
     {

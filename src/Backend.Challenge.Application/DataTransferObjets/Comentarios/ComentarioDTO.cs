@@ -1,4 +1,4 @@
-﻿using Backend.Challenge.Kernel.Application;
+﻿using Backend.Challenge.Kernel.Application.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,7 @@ namespace Backend.Challenge.Application.DataTransferObjets
 {
     public class ComentarioDTO : BaseDTO
     {
-        public string Texto { get; }
-        public string Autor { get; }
-        public DateTimeOffset DataPublicacao { get; }
+        public string Texto { get; set; }
+        public string Autor { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
             return entity;
         }
 
-        public Task<TEntity> AtualizarAsync(TEntity entity)
+        public Task<TEntity> ActualizarAsync(TEntity entity)
         {
             this.DbSet.Update(entity);
             return Task.FromResult(entity);
@@ -61,7 +61,7 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
 
             return new PagedResult<TEntity>
             {
-                List = entities,
+                Items = entities,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 TotalResults = await ObtemNumeroTotalRegistosAsync()

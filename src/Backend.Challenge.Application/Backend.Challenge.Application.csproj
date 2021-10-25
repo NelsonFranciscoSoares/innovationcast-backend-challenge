@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,10 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj" />
+    <ProjectReference Include="..\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj" />
     <ProjectReference Include="..\Backend.Challenge.Domain\Backend.Challenge.Domain.csproj" />
   </ItemGroup>
 

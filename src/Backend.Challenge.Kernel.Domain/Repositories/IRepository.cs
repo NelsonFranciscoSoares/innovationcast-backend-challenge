@@ -15,7 +15,7 @@ namespace Backend.Challenge.Kernel.Infrastructure.Persistence.Repositories
         Task<TEntity> AdicionarAsync(TEntity entity);
         Task<TEntity> ObterPorIdAsync(Guid id);
         Task<PagedResult<TEntity>> ObterTodosPaginadoAsync(int pageSize, int pageIndex);
-        Task<TEntity> AtualizarAsync(TEntity entity);
+        Task<TEntity> ActualizarAsync(TEntity entity);
         Task RemoverAsync(Guid id);
         Task<IEnumerable<TEntity>> BuscarAsync(Expression<Func<TEntity, bool>> predicate);
         IUnitOfWork UnitOfWork { get; }
