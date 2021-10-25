@@ -7,9 +7,8 @@ namespace Backend.Challenge.Domain.Entities
 {
     public class UtilizadorEntity : BaseEntity, IAggregateRoot
     {
-        public string Username { get; }
-        public string Email { get; }
-        public IEnumerable<EntidadeEntity> Entidades { get; }
+        public string Username { get; private set; }
+        public string Email { get; private set; }
         public IEnumerable<ComentarioEntity> ComentariosVisualizados { get; }
 
         public UtilizadorEntity(string username, string email)

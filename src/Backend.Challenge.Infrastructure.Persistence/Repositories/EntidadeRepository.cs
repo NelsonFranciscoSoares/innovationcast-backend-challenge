@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Backend.Challenge.Kernel.Domain;
 using Microsoft.EntityFrameworkCore;
-using Backend.Challenge.Kernel.Infrastructure.Persistence.Helpers.QueryOperations;
+using System.Collections.Generic;
 
 namespace Backend.Challenge.Infrastructure.Persistence.Repositories
 {
@@ -24,35 +24,14 @@ namespace Backend.Challenge.Infrastructure.Persistence.Repositories
 
         public override IUnitOfWork UnitOfWork => this._discussaoDbContext;
 
-        private async Task<PagedResult<ComentarioEntity>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex, OrderQueryEnum orderQuery = OrderQueryEnum.ASCENDING)
+        private PagedResult<ComentarioEntity> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex, IEnumerable<ComentarioEntity> comentarios, int totalComentarios)
         {
-            var offset = this.CalculaOffset(pageSize, pageIndex);
-
-            var queryable =  this._discussaoDbContext.Comentarios
-                                        .Where(param => param.EntidadeId == id)
-                                        .AsNoTracking()
-                                        .Skip(offset)
-                                        .Take(pageSize);
-
-            IOrderedQueryable<ComentarioEntity> orderedQueryable = null;
-
-            if(orderQuery == OrderQueryEnum.ASCENDING)
-            {
-                orderedQueryable = queryable.OrderBy(p => p.DataPublicacao);
-            }
-            else
-            {
-                orderedQueryable = queryable.OrderByDescending(p => p.DataPublicacao);
-            }
-
-            var comentarios = await orderedQueryable.ToListAsync();
-
             return new PagedResult<ComentarioEntity>
             {
                 Items = comentarios,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                TotalResults = await this._discussaoDbContext.Comentarios.CountAsync()
+                TotalResults = totalComentarios
             };
         }
 
@@ -61,26 +40,39 @@ namespace Backend.Challenge.Infrastructure.Persistence.Repositories
             var offset = this.CalculaOffset(pageSize, pageIndex);
 
             var comentarios = await this._discussaoDbContext.Comentarios
-                                        .Where(param => param.EntidadeId == id && param.Visualizado_Por.Select(innerParam => innerParam.Id).Contains(utilizadorId) == false)
+                                        .Where(param => param.EntidadeId == id && param.UtilizadoresVisualizaram.Select(innerParam => innerParam.Id).Contains(utilizadorId) == false)
                                         .AsNoTracking()
                                         .Skip(offset)
                                         .Take(pageSize)
                                         .OrderByDescending(p => p.DataPublicacao)
                                         .ToListAsync();
 
+            var totalComentarios = await this._discussaoDbContext.Comentarios
+                                                    .AsNoTracking()
+                                                    .Where(param => param.EntidadeId == id && param.UtilizadoresVisualizaram.Select(innerParam => innerParam.Id).Contains(utilizadorId) == false)
+                                                    .CountAsync();
 
-            return new PagedResult<ComentarioEntity>
-            {
-                Items = comentarios,
-                PageIndex = pageIndex,
-                PageSize = pageSize,
-                TotalResults = await this._discussaoDbContext.Comentarios.CountAsync()
-            };
+            return  ObterComentariosPorEntidadePaginadoAsync(id, pageSize, pageIndex, comentarios, totalComentarios);
         }
 
         public async Task<PagedResult<ComentarioEntity>> ObterComentariosPorEntidadePaginadoAsync(Guid id, int pageSize, int pageIndex)
         {
-            return await ObterComentariosPorEntidadePaginadoAsync(id, pageSize, pageIndex, OrderQueryEnum.ASCENDING);
+            var offset = this.CalculaOffset(pageSize, pageIndex);
+
+            var comentarios = await this._discussaoDbContext.Comentarios
+                                                            .Where(param => param.EntidadeId == id)
+                                                            .AsNoTracking()
+                                                            .Skip(offset)
+                                                            .Take(pageSize)
+                                                            .OrderBy(p => p.DataPublicacao)
+                                                            .ToListAsync();
+
+            var totalComentarios = await this._discussaoDbContext.Comentarios
+                                                            .Where(param => param.EntidadeId == id)
+                                                            .AsNoTracking()
+                                                            .CountAsync();
+
+            return ObterComentariosPorEntidadePaginadoAsync(id, pageSize, pageIndex, comentarios, totalComentarios);
         }
     }
 }

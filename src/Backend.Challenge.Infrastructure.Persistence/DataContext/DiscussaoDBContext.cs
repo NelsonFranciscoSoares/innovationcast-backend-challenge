@@ -39,11 +39,11 @@ namespace Backend.Challenge.Infrastructure.Persistence.DataContext
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.DataInsercao = DateTimeOffset.UtcNow;
+                        entry.Entity.DataInsercao = DateTime.UtcNow;
                         break;
 
                     case EntityState.Modified:
-                        entry.Entity.DataEdicao = DateTimeOffset.UtcNow;
+                        entry.Entity.DataEdicao = DateTime.UtcNow;
                         break;
                 }
             }

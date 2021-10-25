@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.Challenge.Applicati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.Challenge.Kernel.Application", "src\Backend.Challenge.Kernel.Application\Backend.Challenge.Kernel.Application.csproj", "{3133FD95-F162-4CDC-ACCA-F4C93A220429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Challenge.Kernel.API", "src\Backend.Challenge.Kernel.API\Backend.Challenge.Kernel.API.csproj", "{2610F834-BE91-49EB-8807-78F8CE2859FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend.Challenge.Kernel.API", "src\Backend.Challenge.Kernel.API\Backend.Challenge.Kernel.API.csproj", "{2610F834-BE91-49EB-8807-78F8CE2859FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6 - UnitTests", "6 - UnitTests", "{6503259D-1B27-4C7C-ADCF-AB434B4CFD95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7 - IntegrationTests", "7 - IntegrationTests", "{436896E4-A83D-48CA-8CF5-6EC941366BFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

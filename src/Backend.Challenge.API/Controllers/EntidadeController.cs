@@ -25,6 +25,8 @@ namespace Backend.Challenge.API.Controllers
         [HttpPost("{entidadeId:guid}/adicionar-novo-comentario")]
         public async Task<ActionResult> AdicionaComentario(Guid entidadeId, CriarComentarioInputDTO criarComentarioDTO)
         {
+            if (ModelState.IsValid == false) return RespostaPersonalizada<ResponseCriarComentarioDTO, CriarComentarioOutputDTO>(ModelState);
+
             var criarComentarioOutputDTO = await this._entidadeService.AdicionarComentarioAsync(entidadeId, criarComentarioDTO);
 
             return RespostaPersonalizada<ResponseCriarComentarioDTO, CriarComentarioOutputDTO>(criarComentarioOutputDTO);
