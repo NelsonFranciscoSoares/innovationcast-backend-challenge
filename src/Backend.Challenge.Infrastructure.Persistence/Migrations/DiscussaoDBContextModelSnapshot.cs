@@ -30,11 +30,11 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<DateTimeOffset>("DataEdicao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("DataEdicao")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTimeOffset>("DataInsercao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("DataInsercao")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTimeOffset>("DataPublicacao")
                         .HasColumnType("timestamp with time zone");
@@ -60,38 +60,31 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("DataEdicao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("DataEdicao")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTimeOffset>("DataInsercao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("DataInsercao")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("TipoComentario")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("UtilizadorEntityId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UtilizadorEntityId");
 
                     b.ToTable("Entidades");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d5e9db95-4cac-44d7-9faa-d132140dfb2a"),
-                            DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("06406200-c8ee-44e1-bf86-bc5827048705"),
+                            DataInsercao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TipoComentario = "IDEIA"
                         },
                         new
                         {
-                            Id = new Guid("57819973-7eb4-4d19-87a0-c30b684a6546"),
-                            DataEdicao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            DataInsercao = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Id = new Guid("21738160-0178-42c6-8b9e-c60f8fab459d"),
+                            DataInsercao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TipoComentario = "SINAIS"
                         });
                 });
@@ -102,11 +95,11 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTimeOffset>("DataEdicao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("DataEdicao")
+                        .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTimeOffset>("DataInsercao")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("DataInsercao")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -119,6 +112,22 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Utilizadores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("abea8a1e-d8e2-47f7-b7e7-6dd6cfe48ac4"),
+                            DataInsercao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "fake.nfsoares@gmail.com",
+                            Username = "nfsoares"
+                        },
+                        new
+                        {
+                            Id = new Guid("2d4305a4-0481-4ced-85dc-2d2a09a99431"),
+                            DataInsercao = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "fake.teste01@gmail.com",
+                            Username = "teste01"
+                        });
                 });
 
             modelBuilder.Entity("ComentarioEntityUtilizadorEntity", b =>
@@ -126,12 +135,12 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("ComentariosVisualizadosId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("Visualizado_PorId")
+                    b.Property<Guid>("UtilizadoresVisualizaramId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ComentariosVisualizadosId", "Visualizado_PorId");
+                    b.HasKey("ComentariosVisualizadosId", "UtilizadoresVisualizaramId");
 
-                    b.HasIndex("Visualizado_PorId");
+                    b.HasIndex("UtilizadoresVisualizaramId");
 
                     b.ToTable("ComentarioEntityUtilizadorEntity");
                 });
@@ -146,13 +155,6 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
                     b.Navigation("Entidade");
                 });
 
-            modelBuilder.Entity("Backend.Challenge.Domain.Entities.EntidadeEntity", b =>
-                {
-                    b.HasOne("Backend.Challenge.Domain.Entities.UtilizadorEntity", null)
-                        .WithMany("Entidades")
-                        .HasForeignKey("UtilizadorEntityId");
-                });
-
             modelBuilder.Entity("ComentarioEntityUtilizadorEntity", b =>
                 {
                     b.HasOne("Backend.Challenge.Domain.Entities.ComentarioEntity", null)
@@ -162,18 +164,13 @@ namespace Backend.Challenge.Infrastructure.Persistence.Migrations
 
                     b.HasOne("Backend.Challenge.Domain.Entities.UtilizadorEntity", null)
                         .WithMany()
-                        .HasForeignKey("Visualizado_PorId")
+                        .HasForeignKey("UtilizadoresVisualizaramId")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Backend.Challenge.Domain.Entities.EntidadeEntity", b =>
                 {
                     b.Navigation("Comentarios");
-                });
-
-            modelBuilder.Entity("Backend.Challenge.Domain.Entities.UtilizadorEntity", b =>
-                {
-                    b.Navigation("Entidades");
                 });
 #pragma warning restore 612, 618
         }

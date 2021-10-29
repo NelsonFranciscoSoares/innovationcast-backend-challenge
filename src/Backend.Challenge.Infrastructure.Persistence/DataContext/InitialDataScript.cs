@@ -17,6 +17,9 @@ namespace Backend.Challenge.Infrastructure.Persistence.DataContext
 
             modelBuilder.Entity<EntidadeEntity>().HasData(entidadeFactory.Create(TipoEntidadeEnum.IDEIA));
             modelBuilder.Entity<EntidadeEntity>().HasData(entidadeFactory.Create(TipoEntidadeEnum.SINAIS));
+
+            modelBuilder.Entity<UtilizadorEntity>().HasData(new UtilizadorEntity("nfsoares", "fake.nfsoares@gmail.com"));
+            modelBuilder.Entity<UtilizadorEntity>().HasData(new UtilizadorEntity("teste01", "fake.teste01@gmail.com"));
         }
     }
 }

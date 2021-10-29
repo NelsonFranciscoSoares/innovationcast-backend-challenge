@@ -8,6 +8,5 @@ namespace Backend.Challenge.Kernel.API
         {
             return configuration?.GetSection("ConfigurationsData")[name];
         }
-
     }
 }

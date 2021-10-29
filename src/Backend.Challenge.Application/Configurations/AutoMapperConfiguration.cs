@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Backend.Challenge.Application.DataTransferObjets;
 using Backend.Challenge.Application.DataTransferObjets.Comentarios;
 using Backend.Challenge.Application.DataTransferObjets.Comentarios.Criar;
 using Backend.Challenge.Domain.Entities;
@@ -15,8 +14,12 @@ namespace Backend.Challenge.API.Configurations
             this.CreateMap<CriarComentarioInputDTO, ComentarioEntity>()
                     .ConstructUsing(inputDTO => ComentarioFactory.Create(inputDTO.EntidadeId, inputDTO.Texto, inputDTO.Autor));
             this.CreateMap<ComentarioEntity, CriarComentarioOutputDTO>();
+            
             this.CreateMap<PagedResult<ComentarioEntity>, PagedResultDTO<ListarComentariosOutputDTO>>();
             this.CreateMap<ComentarioEntity, ListarComentariosOutputDTO>();
+
+            this.CreateMap<PagedResult<ComentarioEntity>, PagedResultDTO<ListarComentariosNovosOutputDTO>>();
+            this.CreateMap<ComentarioEntity, ListarComentariosNovosOutputDTO>();
         }
     }
 }

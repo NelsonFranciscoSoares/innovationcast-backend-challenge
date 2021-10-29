@@ -12,7 +12,7 @@ namespace Backend.Challenge.Domain.Entities
         public string Texto { get; private set; }
         public string Autor { get; private set; }
         public DateTimeOffset DataPublicacao { get; private set; }
-        public List<UtilizadorEntity> Visualizado_Por { get; private set; }
+        public List<UtilizadorEntity> UtilizadoresVisualizaram{ get; private set; }
 
         internal ComentarioEntity(Guid entidadeId, string texto, string autor)
         {
@@ -20,7 +20,7 @@ namespace Backend.Challenge.Domain.Entities
             this.Texto = texto;
             this.Autor = autor;
             this.DataPublicacao = DateTimeOffset.UtcNow;
-            this.Visualizado_Por = new List<UtilizadorEntity>();
+            this.UtilizadoresVisualizaram = new List<UtilizadorEntity>();
         }
 
         public ComentarioEntity() { }
@@ -32,9 +32,9 @@ namespace Backend.Challenge.Domain.Entities
 
         public void AdicionaVisualizacao(params Guid [] utilizadoresIds)
         {
-            if (this.Visualizado_Por == null) this.Visualizado_Por = new List<UtilizadorEntity>();
+            if (this.UtilizadoresVisualizaram == null) this.UtilizadoresVisualizaram = new List<UtilizadorEntity>();
 
-            utilizadoresIds.ToList().ForEach(utilizadorId => this.Visualizado_Por.Add(new UtilizadorEntity(utilizadorId)));
+            utilizadoresIds.ToList().ForEach(utilizadorId => this.UtilizadoresVisualizaram.Add(new UtilizadorEntity(utilizadorId)));
         }
     }
 }

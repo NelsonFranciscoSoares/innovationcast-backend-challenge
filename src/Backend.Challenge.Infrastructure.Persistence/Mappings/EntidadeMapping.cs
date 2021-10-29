@@ -16,10 +16,6 @@ namespace Backend.Challenge.Infrastructure.Persistence.Mappings
         {
             base.Configure(builder);
 
-            builder.HasMany(f => f.Comentarios)
-                    .WithOne(p => p.Entidade)
-                    .HasForeignKey(p => p.EntidadeId);
-
             builder.Property(f => f.TipoComentario)
                     .HasConversion<string>();
 
